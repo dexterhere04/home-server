@@ -1,0 +1,26 @@
+services:
+  gitea:
+    image: docker.gitea.com/gitea:latest
+
+    container_name: gitea
+
+    restart: unless-stopped
+
+    networks:
+      - homelab
+
+    ports:
+      - "3000:3000"
+      - "2222:22"
+
+    volumes:
+      - /srv/gitea:/data
+
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+      - TZ=Asia/Kolkata
+
+networks:
+  homelab:
+    external: true
