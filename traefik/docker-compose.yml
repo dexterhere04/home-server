@@ -1,0 +1,41 @@
+services:
+  traefik:
+    image: traefik:v3.7
+
+    container_name: traefik
+
+    restart: unless-stopped
+
+    security_opt:
+      - no-new-privileges:true
+
+    networks:
+      - homelab
+
+    ports:
+      - "80:80"
+      - "8081:8080"
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+    command:
+      # EntryPoints
+      - "--entrypoints.web.address=:80"
+
+      # Docker provider
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--providers.docker.network=homelab"
+
+      # Dashboard
+      - "--api.dashboard=true"
+      - "--api.insecure=true"
+
+      # Logging
+      - "--log.level=INFO"
+      - "--accesslog=true"
+
+networks:
+  homelab:
+    external: true
