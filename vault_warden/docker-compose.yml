@@ -1,0 +1,26 @@
+services:
+  vaultwarden:
+    image: vaultwarden/server:latest
+
+    container_name: vaultwarden
+
+    restart: unless-stopped
+
+    env_file:
+      - .env
+
+    volumes:
+      - /srv/vaultwarden:/data
+
+    networks:
+      - homelab
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.vaultwarden.rule=Host(`vault.homelabsrock.me`)"
+      - "traefik.http.routers.vaultwarden.entrypoints=web"
+      - "traefik.http.services.vaultwarden.loadbalancer.server.port=80"
+
+networks:
+  homelab:
+    external: true

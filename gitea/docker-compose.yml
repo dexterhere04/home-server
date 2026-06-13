@@ -8,7 +8,7 @@ services:
 
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.gitea.rule=Host(`git.home`)"
+      - "traefik.http.routers.gitea.rule=Host(`git.homelabsrock.me`)"
       - "traefik.http.routers.gitea.entrypoints=web"
       - "traefik.http.services.gitea.loadbalancer.server.port=3000"
 
